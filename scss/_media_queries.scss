@@ -1,4 +1,5 @@
-$light-blue: #95e1d3;
+@import '../partials/variables';
+@import '../partials/mixins';
 
 @media (min-width: 540px) {
   .header__carousel-elem {
@@ -7,7 +8,7 @@ $light-blue: #95e1d3;
     &-text {
       display: flex;
       text-transform: uppercase;
-      color: white;
+      color: $white;
       font-weight: 300;
       margin-left: 10px;
     }
@@ -74,8 +75,6 @@ $light-blue: #95e1d3;
           }
         }
 
-        &-elem {}
-
         &-photo {
           width: 100%;
         }
@@ -89,7 +88,13 @@ $light-blue: #95e1d3;
       }
     }
 
-    
+    &__whatWeDo {
+      &-testemonial {
+        &-icon {
+          display: flex;
+        }
+      }
+    }
   }
 }
 
@@ -110,34 +115,43 @@ $light-blue: #95e1d3;
     }
   }
 
+  .hover {
+    &-wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
   .photo {
     margin: 0 20px;
+  }
+
+  .width--30-percents {
+    width: 30%;
   }
 
   .header {
     &__navbar {
       width: 100%;
-      background-color: transparent;
+      background-color: rgba(241,114,114,0.96);
 
       &-logo {
         width: 20%;
 
         &:hover {
-          color: #fce38a;
+          color: $hover-yellow;
         }
       }
 
       &-menu {
         width: 80%;
-        
 
         &-items {
           display: flex;
-          width: 80%;
           justify-content: inherit;
+          width: 80%;
           list-style-type: none;
           align-items: center;
-          
         }
 
         &-item {
@@ -146,8 +160,8 @@ $light-blue: #95e1d3;
          }
 
           :hover {
-            color: #fce38a;
-            border-bottom: 3px solid #fce38a;
+            color: $hover-yellow;
+            border-bottom: 3px solid $hover-yellow;
           }
         }
 
@@ -158,7 +172,7 @@ $light-blue: #95e1d3;
 
           :hover {
             cursor: pointer;
-            color: #fce38a;
+            color: $hover-yellow;
           }
         }
 
@@ -232,17 +246,6 @@ $light-blue: #95e1d3;
       }
     }
 
-    &__team {
-      &-photos {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-
-      &-person-wrapper {
-        width: 30%;
-      }
-    }
-
     &__brand {
       &-list-img {
         width: 33%;
@@ -295,9 +298,9 @@ $light-blue: #95e1d3;
 
     &__blog {
       &-wrapper {
-        width: 100%;
         flex-wrap: wrap;
         flex-direction: row;
+        width: 100%;
         align-items: end;
       }
 

@@ -1,12 +1,5 @@
+@import '../partials/variables';
 @import '../partials/mixins';
-
-$white: #ffffff;
-$black: black;
-$pink: #f44f4f;
-$darker-white: #8a8a8ad6;
-$trapsparet-grey: #e2e2e2db;
-$light-blue: #95e1d3;
-// $light-grey: #282828bd;
 
 @font-face {
   src: url('../fonts/Montserrat-Bold.ttf');
@@ -33,6 +26,10 @@ $light-blue: #95e1d3;
   font-family: Roboto-LightItalic;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -47,51 +44,43 @@ body {
   letter-spacing: 0.5px;
   color: $darker-white;
   font-weight: 400;
-  font-family: Roboto-Regular;
+  font-family: $main-font;
 }
 
 h2 {
-  font-family: Montserrat-Bold;
-  color: $black;
-  text-transform: uppercase;
-  font-size: 1.8em;
+  @include font(1.8em, $third-font-bold, 400, $black, uppercase);
 }
 
 h3 {
-  font-family: KaushanScript-Regular;
-  color: $black;
-  font-size: 1.4em;
-  font-weight: 400;
+  @include font(1.4em, $secondary-font, 400, $black, normal)
 }
 
 h4 {
-  text-transform: uppercase;
-  font-weight: 300;
-  color: #000;
-  font-size: 1.1em;
+  @include font(1.1em, $main-font, 300, $black, uppercase)
 }
 
 h5 {
-  font-family: Roboto-LightItalic;
-  font-size: 1em;
+  font-family: $main-font-italic;
 }
 
 h6 {
-  font-size: 0.9em;
-  color: #2ec06c;
-  text-transform: uppercase;
-  font-family: Montserrat-Regular;
-  font-weight: 500;
+  @include font(0.9em, $third-font, 500, $green, uppercase);
 }
 
 a {
   text-decoration: none;
+
   &:hover {
     cursor: pointer;
   }
 }
 
-.flex {
+.big {
+  font-size: 50px;
+  font-weight: 900;
+}
+
+.flex-column {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,7 +97,64 @@ a {
 }
 
 .color-pink {
-  color: #f38181;
+  color: $lineColor;
+}
+
+//hover on pictures
+.hover {
+  &-wrapper {
+    padding: 30px;
+    width: 100%;
+  }
+
+  &-background {
+    background-color: $light-blue;
+    margin-bottom: 20px;
+  }
+
+  &-photo-wrapper {
+    position: relative;
+  }
+
+  &-photo {
+    display: block;
+    width: 100%;
+  }
+
+  &-overlay {
+    position: absolute;
+    opacity: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    & > * {
+      color: $white;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+
+    &:hover {
+      opacity: 1;
+      background: $linear-gradient;
+      cursor: pointer;
+    }
+
+    &-icon {
+      height: 30px;
+      width: 40px;
+      background-color: $hover-yellow;
+      color: $lineColor;
+      margin: 0.5px;
+
+      &:hover {
+        background-color: $darker-pink;
+        color: $white;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .hover-transform {
@@ -117,9 +163,14 @@ a {
     transform: translate(-10px, -10px);
   }
 }
+//hover on pictures end
 
-.background-transparent {
-  background-color: transparent;
+.section {
+  &-header {
+    justify-content: space-between;
+    margin: 50px 0 30px;
+    height: 80px;
+  }
 }
 
 .container {
@@ -130,12 +181,6 @@ a {
     margin-top: 50px;
   }
 
-  &-info {
-    margin: 50px 0 30px;
-    height: 80px;
-    justify-content: space-between;
-  }
-
   &-photo {
     padding: 30px;
   }
@@ -143,78 +188,139 @@ a {
 
 .line {
   width: 60px;
-  border-bottom: 2px solid $pink;
+  border-bottom: 2px solid $lineColor;
 }
 
 .italic-text {
-  font-family: Roboto-LightItalic;
+  font-family: $main-font-italic;
 }
+
+//modal
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal {
+  cursor: pointer;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: $modal-black;
+}
+
+.modal-content {
+  margin: auto;
+  display: flex;
+  max-height: 100%;
+  padding: 20px;
+}
+
+.modal-content {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0)
+  }
+
+  to {
+    transform: scale(1)
+  }
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: $white;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: $testemonial-background;
+  text-decoration: none;
+  cursor: pointer;
+}
+//end modal
 
 .header {
   position: relative;
+  z-index: 1;
   background: url('../images/bg-header-gradient.png') top right / cover;
   height: auto;
   width: 100%;
-  z-index: 1;
 
   &__navbar {
-    background-color: #f44f4f;
+    background-color: $lineColor;
     height: 50px;
 
+    &--scroll {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(241, 114, 114, 0.96);
+      z-index: 2;
+    }
+
     &-wrapper {
-      display: flex;
+      justify-content: space-between;
+      align-items: center;
       width: 100%;
       height: 100%;
-      align-items: center;
-      justify-content: space-between;
     }
 
     &-logo {
+      @include font(1.5em, $third-font-bold, 400, $white, normal);
       display: flex;
       width: 70%;
-      color: $white;
-      font-family: Montserrat-Bold;
-      font-size: 1.5em;
     }
 
     &-menu {
-      display: flex;
-      width: 30%;
       justify-content: space-between;
+      width: 30%;
 
       &-items {
         display: none;
       }
 
       &-item {
-        color: $white;
-        font-family: Montserrat-Regular;
-        font-size: 0.9em;
-        text-transform: uppercase;
+        @include font(0.9em, Montserrat-Regular, 400, $white, uppercase);
 
         & > * {
-          color: white;
+          color: $white;
         }
       }
 
-      &-burger, &-cart, &-search {
+      &-burger,
+      &-cart,
+      &-search {
         color: $white;
       }
     }
   }
 
   &__text {
-    color: $white;
-    font-size: 1.7em;
+    @include font(1.7em, $secondary-font, 400, $white, normal);
     margin-bottom: 20px;
     letter-spacing: 1px;
   }
 
   &__quote {
-    color: $white;
-    font-size: 3.5em;
+    @include font(3.5em, $third-font-bold, 400, $white, uppercase);
     line-height: 1.1em;
-    text-transform: uppercase;
   }
 
   &__line {
@@ -223,14 +329,11 @@ a {
   }
 
   &__button {
+    @include font(1em, $main-font, 700, $white, uppercase);
     margin-top: 30px;
     border: 3px solid $white;
     padding: 10px 40px;
     background-color: transparent;
-    color: $white;
-    text-transform: uppercase;
-    font-size: 1em;
-    font-weight: 700;
 
     &:hover {
       cursor: pointer;
@@ -238,20 +341,18 @@ a {
   }
 
   &__carousel {
-    display: flex;
-    flex-direction: row;
     width: 100%;
     margin: 30px 0 15px;
 
     &-elem {
       width: 23%;
       margin: 15px;
-      border-top: 3px solid rgba(255, 255, 255, .7);
+      border-top: 3px solid $trapsparet-grey;
 
       &:hover {
-        border-image-source: linear-gradient(to left, white 74%, red 26%);
+        border-image-source: linear-gradient(to left, white 74%, $lineColor 26%);;
         border-image-slice: 1;
-        color: #fce38a;
+        color: $hover-yellow;
       }
 
       &-text {
@@ -268,12 +369,12 @@ a {
     content: "";
     display: block;
     position: absolute;
+    opacity: 0.1;
+    z-index: -1;
     background: center center /cover url('../images/bg-header.jpg') no-repeat;
     top: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.1;
-    z-index: -1;
   }
 }
 
@@ -285,7 +386,6 @@ a {
     height: 100%;
 
     &-list {
-      flex-direction: row;
       justify-content: flex-start;
       align-items: flex-start;
       width: 100%;
@@ -293,8 +393,6 @@ a {
     }
 
     &-item {
-      display: flex;
-      flex-direction: column;
       justify-content: inherit;
       width: 20%;
       border-right: 0.5px solid $white;
@@ -307,16 +405,13 @@ a {
     }
 
     &-number {
-      font-family: Montserrat-Bold;
+      font-family: $third-font-bold;
       font-size: 2.3em;
       margin: 10px;
     }
 
     &-text {
-      font-family: Montserrat-Regular;
-      font-size: 0.7em;
-      font-weight: 100;
-      text-transform: uppercase;
+      @include font(0.7em, Montserrat-Regular, 100, $white, uppercase);
       margin: 5px;
     }
   }
@@ -354,11 +449,11 @@ a {
   }
 
   &__unique {
+    position: relative;
+    text-align: center;
     background: url('../images/unique-design/bg-unique-design.jpg') top right / cover;
     height: auto;
-    position: relative;
     padding-top: 20px;
-    text-align: center;
 
     &-photo {
       &-big {
@@ -368,8 +463,8 @@ a {
 
       &-small {
         position: absolute;
-        width: 100px;
         left: 50%;
+        width: 100px;
         margin: 127px 0 0 40px;
       }
     }
@@ -379,8 +474,8 @@ a {
     padding-top: 30px;
 
     &-content {
-      margin-top: 20px;
       align-items: flex-start;
+      margin-top: 20px;
     }
 
     &-image {
@@ -393,16 +488,19 @@ a {
 
     &-list {
       width: 100%;
+
+      :nth-child(2) {
+        display: flex;
+      }
     }
 
     &-dropdown {
-      border: 0.5px solid $trapsparet-grey;
-      flex-direction: row;
-      width: 100%;
       justify-content: space-between;
+      border: 0.5px solid $trapsparet-grey;
+      width: 100%;
       height: 60px;
       padding: 15px;
-      margin-bottom: 10px;
+      margin: 10px 0 1px;
 
       &:hover {
         cursor: pointer;
@@ -413,14 +511,58 @@ a {
       }
 
       &-wrapper {
-        flex-direction: row;
+        justify-content: space-between;
       }
+    }
+
+    &-testemonial-icon {
+      display: none;
+      border: 3px solid $light-blue;
+      width: 100px;
+      justify-content: center;
+
+      & > * {
+        height: 30px;
+        display: flex;
+        align-self: center;
+      }
+    }
+
+    &-panel {
+      display: none;
+      height: 150px;
+      overflow: scroll;
+      padding: 20px;
+      border: 0.5px solid $trapsparet-grey;
+      font-style: italic;
+      text-align: left;
+      @include scroll();
     }
   }
 
   &__testemonial {
-    margin-top: 20px;
+    background-color: $testemonial-background;
+    margin: 50px 0;
     height: auto;
+
+    &-next,
+    &-prev {
+      display: block;
+      padding: 16px;
+      font-weight: bold;
+      font-size: 25px;
+    }
+
+    &-prev:hover,
+    &-next:hover {
+      background-color: $white;
+      color: black;
+    }
+
+    &-list {
+      position: relative;
+      margin: 30px 0;
+    }
 
     &-wrapper {
       width: 100%;
@@ -428,25 +570,33 @@ a {
 
     &-img {
       display: none;
+
+      &--round {
+        border-radius: 50%;
+      }
     }
 
     &-text {
-      width: 100%;
       text-align: left;
+      width: 100%;
       font-size: 0.9em;
-      padding: 10px;
+      padding: 10px 10px 10px 30px;
     }
 
     &-signature {
-      flex-direction: row;
       justify-content: flex-start;
       margin-top: 10px;
+      align-items: flex-start;
 
       &-author {
-        font-family: KaushanScript-Regular;
+        font-family: $secondary-font;
         font-size: 1.3em;
-        margin-left: 10px;
+        margin-left: 70px;
       }
+    }
+
+    &-bg--transparent {
+      background-color: transparent;
     }
   }
 
@@ -459,66 +609,16 @@ a {
         margin-bottom: 30px
       }
     }
-
-    &-person {
-      background-color: $light-blue;
-      margin-bottom: 20px;
-
-      &-photo {
-        position: relative;
-      }
-
-      &-img {
-        display: block;
-        width: 100%;
-      }
-
-      &-overlay {
-        opacity: 0;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        top: 0;
-
-        & > * {
-          color: white;
-          font-weight: 400;
-          margin-bottom: 5px;
-        }
-
-        &:hover {
-          cursor: pointer;
-          opacity: 1;
-          background: linear-gradient(to top, yellow 0%, rgba(243, 129, 129, 0.9) 50%);
-        }
-
-        &-icon {
-          height: 30px;
-          width: 40px;
-          background-color: #fce38a;
-          color: #f38181;
-          margin: 0.5px;
-
-          &:hover {
-            cursor: pointer;
-            background-color: #fa9797e3;
-            color: $white;
-          }
-        }
-      }
-    }
   }
 
   &__brand {
-    background-color: #f8f8f8;
+    background-color: $trapsparet-grey;
     height: auto;
 
     &-list {
-      width: 100%;
-      flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-between;
+      width: 100%;
 
       &-img {
         width: 50%;
@@ -569,7 +669,6 @@ a {
 
     &-list {
       &-person {
-        flex-direction: row;
         width: 100%;
         padding: 20px 0;
         margin-bottom: 10px;
@@ -581,9 +680,9 @@ a {
       }
 
       &-info {
+        align-items: flex-start;
         width: 80%;
         padding-left: 15px;
-        align-items: flex-start;
 
         & > * {
           height: 20%;
@@ -602,7 +701,6 @@ a {
   }
 
   &__blog {
-
     &-wrapper {
       & > * {
         padding: 15px;
@@ -612,6 +710,7 @@ a {
     &-article {
       max-width: 380px;
       text-align: left;
+
       &-description {
         padding-bottom: 10px;
 
@@ -621,8 +720,8 @@ a {
       }
 
       &-viewing {
-        width: 100%;
         align-self: flex-start;
+        width: 100%;
         padding-top: 20px;
         border-top: 1px solid $trapsparet-grey;
 
@@ -635,12 +734,12 @@ a {
     }
 
     &-calendar {
-      background-color: $light-blue;
       position: absolute;
-      height: 70px;
-      width: 60px;
       left: -15px;
       bottom: 20px;
+      background-color: $light-blue;
+      height: 70px;
+      width: 60px;
 
       :nth-child(1) {
         font-size: 1.5em;
@@ -649,17 +748,29 @@ a {
       }
 
       :nth-child(2) {
-        color: white;
+        color: $white;
         font-style: italic;
       }
     }
 
     &-photo {
-      width: 100%;
       position: relative;
+      width: 100%;
 
       &-img {
+        height: 150px;
         width: 100%;
+      }
+    }
+
+    &-description {
+      height: 100px;
+      overflow: hidden;
+      margin-right: 15px;
+
+      &:hover {
+        overflow-y: scroll;
+        @include scroll;
       }
     }
   }
@@ -670,7 +781,7 @@ a {
     padding: 20px 0;
 
     & > * {
-      color: #f38181;
+      color: $lineColor;
     }
 
     :hover {
@@ -680,9 +791,11 @@ a {
 }
 
 .footer {
-  background-color: #f8f8f8;
+  background-color: $white;
 
-  &__left, &__center, &__right {
+  &__left,
+  &__center,
+  &__right {
     text-align: left;
   }
 
@@ -706,7 +819,7 @@ a {
     }
 
     &-logo {
-      color: #ccc;
+      color: $trapsparet-grey;
       font-size: 3em;
       margin-bottom: 20px;
     }
@@ -729,14 +842,12 @@ a {
   &__form {
     justify-content: space-between;
     align-items: stretch;
-    display: flex;
     height: 40px;
-    flex-direction: row;
     width: 100%;
 
     &-input {
       width: 60%;
-      border: 1px solid rgba(0, 0, 0, 0.2);
+      border: 1px solid $light-blue;
 
       &::placeholder {
         padding-left: 10px;
@@ -746,12 +857,10 @@ a {
     }
 
     &-submit {
+      @include font(1em, $main-font, 700, $white, uppercase);
       width: 40%;
       border: none;
-      background: #95e1d3;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: white;
+      background: $light-blue;
       letter-spacing: 0.7px;
     }
 
@@ -762,8 +871,8 @@ a {
     padding: 20px 0 20px 10px;
 
     &-blog {
-      width: 100%;
       justify-content: space-between;
+      width: 100%;
       text-align: left;
       margin-bottom: 15px;
 
@@ -773,7 +882,8 @@ a {
       }
 
       &-img {
-        width: 100%;
+        height: 77px;
+        width: 110px;
       }
 
       &-info {
@@ -781,9 +891,6 @@ a {
 
         :hover {
           color: $light-blue;
-        }
-
-        &-time {
 
         }
       }
@@ -807,6 +914,7 @@ a {
 
   &__copyright {
     width: 100%;
+
     padding: 20px 0;
     border-top: 0.5px solid $darker-white;
   }
